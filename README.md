@@ -9,6 +9,10 @@ creating one.
 If repo exists deletes and replace it.
 
 Adds summary count after script completes
+Adds first line of README.md to topics
+Adds related projects search links to README.md
+- Does language and platform specific
+- Does general search with each unique topic keyword
 
 ## Step 1
 Create a ssh key for github id on host computer.
