@@ -43,50 +43,6 @@ EOP
 }
 
 
-function write_search_to_file() {
-  #statements
-  local data_file=README.md
-
-  echo  >> $data_file
-
-  echo "$2 search" >> $data_file
-
-  for s in `echo $1 | awk '{print $0}'`; do
-    #statements
-    echo "- [Search by $s"  >> $data_file
-  done
-}
-
-function create_mru() {
-  #statements
-  local data=$1
-
-  local LANG=`echo $REPO_NAME | awk -F'-' '{print $1}' `
-
-  local PLATFORM=`echo $REPO_NAME | awk -F'-' '{print $2}' `
-
-  local SPECIFIC=""
-
-  local GENERAL=""
-
-  local URL="(https://github.com/bearddan2000?tab=repositories&q=;;&type=&language=&sort=)"
-
-  for d in `echo $data | sed 's/["|,]//g' | awk '{print $0}'`; do
-    local search_url=`echo $URL | sed "s/;;/$d/g"`
-    if [[ $d != "$LANG" && $d != "$PLATFORM" ]]; then
-      #statements
-      local special_url=`echo $search_url | sed "s/$d/$LANG-$PLATFORM-$d/g"`
-      SPECIFIC="${SPECIFIC} ${d}]$special_url"
-    fi
-
-    GENERAL="${GENERAL} ${d}]$search_url"
-  done
-
-  write_search_to_file "$SPECIFIC" "## $LANG-$PLATFORM specific"
-
-  write_search_to_file "$GENERAL" "## General"
-
-}
 function create_topics() {
   #statements
   local data_file=README.md
@@ -116,7 +72,6 @@ EOP
 
   echo $third_pass
 
-  create_mru "$third_pass"
 }
 
 for d in `ls -la | grep ^d | awk '{print $NF}' | egrep -v '^\.'`; do
